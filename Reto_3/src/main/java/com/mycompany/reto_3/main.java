@@ -6,6 +6,13 @@ import java.util.Arrays;
 public class main {
     public static void main(String[] args)
     {
+        /*
+        Para la implementación del menú se utilizó un ciclo while que se mantiene
+        activo hasta que el usuario ordene detenerlo. 
+        Tambien se hizo uso de la función switch para simplificar el codigo.
+        Cada opción invoca una función que corresponde a la solución del ejercicio
+        seleccionado.
+        */
         boolean ejecucion = true;
         while(ejecucion)
         {
@@ -50,11 +57,24 @@ public class main {
     }
     static void ejercicio_1()
     {
+        /*
+        Para recibir las notas se le pide al usuario ingresarlas usando como
+        separador el caracter de ',' luego por medio de la funcion split 
+        se almacena los datos ingresados en un arreglo tipo String. 
+        Luego en el ciclo while se convierte cada elemento de este arreglo a tipo
+        float y se realizan las operaciones necesarias para sacar el numero mayor,
+        el numero menor, el promedio y la desviacion estandar.
+        si un numero no es valido entonces se salta y no se tiene en cuenta para
+        las operaciones matematicas.
+        Para sacar el promedio utilizamos la variable contadorAux que nos permite
+        saber cuanto datos VALIDOS fueron ingresados y así sacar el promedio 
+        en base a ese numero.
+        */
         System.out.println("Ingrese las notas separadas por cosas:");
         Scanner input = new Scanner(System.in);
         String notas = input.nextLine();
         String[] arregloNotas = notas.split(",");
-        int i=0;
+        int i=0,contadorAux=0;
         float mayor=0,menor=0,promedio=0;
         double sumatoria = 0;
         float[] arregloNotasFloat = new float[arregloNotas.length];
@@ -69,6 +89,7 @@ public class main {
                             mayor=arregloNotasFloat[i];
                             menor=arregloNotasFloat[i];
                             i++;
+                            contadorAux++;
                             continue;
                         }
                         if(mayor!=0 && menor!=0)
@@ -78,10 +99,15 @@ public class main {
                             if(menor>arregloNotasFloat[i])
                                 menor=arregloNotasFloat[i];
                             i++;
+                            contadorAux++;
                         }
-            } 
+            }
+            if(arregloNotasFloat[i]<0 || arregloNotasFloat[i]>5)
+            {
+                i++;
+            }
         }
-        promedio = promedio/i;
+        promedio = promedio/contadorAux;
             for(i=0;i<arregloNotasFloat.length;i++)
             {
                 sumatoria = sumatoria + Math.pow((arregloNotasFloat[i]-promedio), 2);
@@ -94,23 +120,41 @@ public class main {
     }
     static void ejercicio_2()
     {
-        //cambiar la entrada de los numeros
+        /*
+        Se le pide al usuario ingresar los vectores separando los valores con ','
+        luego se verifica que ambos vectores tengas igual cantidad de elementos
+        y se procede a realizar la multiplicación, al finalizar el ciclo for se imprime
+        el resultado.
+        Si los vectores tienen diferente cantidad de vectores entonces se muestra
+        un mensaje y no se realiza la multiplicacion.
+        */
         double multiplicacion = 0;
-        System.out.println("Ingrese el vector numero 1");
+        System.out.println("Ingrese el vector numero 1 (utilice ',' para separar los numeros)");
         float[] vector_1 = recibir_valor();
-        System.out.println("Ingrese el vector numero 2 ");
+        System.out.println("Ingrese el vector numero 2 (utilice ',' para separar los numeros)");
         float[] vector_2 = recibir_valor();
         if(vector_1.length==vector_2.length)
         {
             for(int i=0;i<vector_1.length;i++)
             {
                 multiplicacion = multiplicacion + (vector_1[i]*vector_2[i]);
-            }    
+            }
+            System.out.println("La multiplicacion escalar de los dos vectores es: "+multiplicacion);
         }
-        System.out.println("La multiplicacion escalar de los dos vectores es: "+multiplicacion);   
+        if(vector_1.length!=vector_2.length)
+        {
+            System.out.println("Los vectores no tienen la misma cantidad de elementos");
+        }
+           
     }
     static void ejercicio_3()
     {
+        /*
+        Se le pide al usuario ingresar las dimensiones de la matriz
+        para luego invocar una funcion donde se ingresan los valores de esta.
+        si la funcion devuelve una matriz vacia entonces se indica que la entrada 
+        es erronea; de lo contrario, se imprime fila por fila la matriz.
+        */
         System.out.println("Ingrese el numero n(Columnas)");
         Scanner input = new Scanner(System.in);
         int n = input.nextInt();
@@ -133,6 +177,10 @@ public class main {
     }
     static float[] recibir_valor()
     {
+        /*
+        Esta funcion se invoca en la funcion ejercicio_2() para recibir los
+        valores y los convierte a un arreglo tipo Float.
+        */
         while(true)
         {
             int i = 0;
@@ -150,6 +198,13 @@ public class main {
     }
     static double[][] recibir_valor_double(int n, int m)
     {
+        /*
+        Esta funcion se invoca en el ejercicio_3() y recibe los valores de 
+        la matriz, luego se procede a convertir esos valores ingresados 
+        en un arreglo tipo double lo cual retorna la funcion.
+        si no coinciden las dimensiones de la matriz con los valores ingresados
+        se retorna una matriz vacia.
+        */
         System.out.println("Ingrese la matriz de la siguiente forma: con ',' para separar las columnas");
         System.out.println("y con ';' para separar las filas");
         System.out.println("Ejemplo: 1,2,3;4,5,6;7,8,9");
@@ -158,7 +213,7 @@ public class main {
         String[] elementosMatrizFilas = elementosMatriz.split(";");
         String[] elementosMatrizColumnas = new String[n];
         double[][] Matriz = new double[m][n];
-        if(elementosMatrizColumnas.length==m)
+        if(elementosMatrizFilas.length==m)
         {
             for(int i=0;i<m;i++)
             {
