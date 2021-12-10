@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.mycompany.reto_3;
 import java.util.Scanner;
 import java.util.Arrays;
 
-/**
- *
- * @author JUAN
- */
 public class main {
     public static void main(String[] args)
     {
@@ -102,65 +95,41 @@ public class main {
     static void ejercicio_2()
     {
         //cambiar la entrada de los numeros
-        System.out.println("Ingrese el numero equivalente al tamano de los vectores");
         double multiplicacion = 0;
-        System.out.println("Ingrese el valor numero ");
+        System.out.println("Ingrese el vector numero 1");
         float[] vector_1 = recibir_valor();
-        System.out.println("Ingrese el valor numero ");
+        System.out.println("Ingrese el vector numero 2 ");
         float[] vector_2 = recibir_valor();
-        for(int i=0;i<vector_1.length;i++)
-           {
-            multiplicacion = multiplicacion + (vector_1[i]*vector_2[i]);
-           }
-        System.out.println("La multiplicacion escalar de los dos vectores es: "+multiplicacion);   
-    }
-    static void ejercicio_3()
-    {
-        /*
-        System.out.println("ingrese el vector 1");
-        double[] vector_1 = recibir_valor_double();
-        System.out.println("ingrese el vector 2");
-        double[] vector_2 = recibir_valor_double();
-        double[][] vector_final = new double[vector_1.length][vector_2.length];
         if(vector_1.length==vector_2.length)
         {
             for(int i=0;i<vector_1.length;i++)
             {
-                for(int j=0;j<vector_2.length;j++)
-                {
-                    vector_final[i][j] = 
-                }
-            }
-        }*/
-        System.out.println("Ingrese el numero n");
+                multiplicacion = multiplicacion + (vector_1[i]*vector_2[i]);
+            }    
+        }
+        System.out.println("La multiplicacion escalar de los dos vectores es: "+multiplicacion);   
+    }
+    static void ejercicio_3()
+    {
+        System.out.println("Ingrese el numero n(Columnas)");
         Scanner input = new Scanner(System.in);
-        if(input.hasNextInt())
+        int n = input.nextInt();
+        System.out.println("Ingrese el numero m(filas)");
+        int m = input.nextInt();
+        double matriz_[][] = recibir_valor_double(n, m);
+        if(matriz_==null)
         {
-            int n = input.nextInt();
-            System.out.println("Ingrese el numero m");
-            input = new Scanner(System.in);
-            if(input.hasNextInt())
-            {
-                int m = input.nextInt();
-                double[][] matriz = new double[n][m];
-                for(int i=0;i<n;i++)
+            System.out.println("No ha ingresado bien los valores de la matriz");
+            return;
+        }
+        for(int i=0;i<m;i++)
                 {
-                    for(int j=0;j<m;j++)
+                    for(int j=0;j<n;j++)
                     {
-                        matriz[i][j] = recibir_valor_double();
-                    }
-                }
-                for(int i=0;i<n;i++)
-                {
-                    for(int j=0;j<m;j++)
-                    {
-                        System.out.print(matriz[i][j]+" ");
+                        System.out.print(matriz_[i][j]+" ");
                     }
                     System.out.println("");
-                }
-            }
-            
-        }    
+                }   
     }
     static float[] recibir_valor()
     {
@@ -179,20 +148,37 @@ public class main {
             return arregloNotasFloat;
         }      
     }
-    static double recibir_valor_double()
+    static double[][] recibir_valor_double(int n, int m)
     {
-        while(true)
+        System.out.println("Ingrese la matriz de la siguiente forma: con ',' para separar las columnas");
+        System.out.println("y con ';' para separar las filas");
+        System.out.println("Ejemplo: 1,2,3;4,5,6;7,8,9");
+        Scanner input = new Scanner(System.in);
+        String elementosMatriz = input.nextLine();
+        String[] elementosMatrizFilas = elementosMatriz.split(";");
+        String[] elementosMatrizColumnas = new String[n];
+        double[][] Matriz = new double[m][n];
+        if(elementosMatrizColumnas.length==m)
         {
-            System.out.println("Digite el valor");
-            Scanner input = new Scanner(System.in);
-            if(input.hasNextDouble())
+            for(int i=0;i<m;i++)
             {
-                double valor = input.nextDouble();
-                return valor;
+                String aux = elementosMatrizFilas[i];
+                elementosMatrizColumnas = aux.split(",");
+                if(elementosMatrizColumnas.length==n)
+                {
+                    for(int j=0;j<n;j++)
+                    {
+                       double auxDouble = Double.parseDouble(elementosMatrizColumnas[j]);
+                       Matriz[i][j]= auxDouble;                
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+                
             }
-            else
-               System.out.println("Ingrese un valor valido");
-        }      
-        
+        }
+        return Matriz;    
     }
 }
