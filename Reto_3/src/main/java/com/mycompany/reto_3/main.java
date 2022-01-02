@@ -102,10 +102,10 @@ public class main {
                             contadorAux++;
                         }
             }
-            if(arregloNotasFloat[i]<0 || arregloNotasFloat[i]>5)
+            /*if(arregloNotasFloat[i]<0 || arregloNotasFloat[i]>5)
             {
                 i++;
-            }
+            }*/
         }
         promedio = promedio/contadorAux;
             for(i=0;i<arregloNotasFloat.length;i++)
